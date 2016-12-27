@@ -4,8 +4,11 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,6 +38,11 @@ public class ResourceController {
 //		model.addAttribute("radioOptions", radios);
 //		model.addAttribute("checkOptions", checks);
 //		model.addAttribute("resource", new Resource());
+		
+		if(1 == 1) {
+			throw new RuntimeException("There was an error.");
+		}
+		
 		return "resource_add";
 	}
 	
@@ -77,6 +85,11 @@ public class ResourceController {
 	public String request(@ModelAttribute("resource") Resource resource) {
 		//Send out an email for request
 		return "The request has been sent for approval";
+	}
+	
+	@ExceptionHandler(NullPointerException.class)
+	public String handleError(HttpServletRequest request) {
+		return "controller_error";
 	}
 	
 }
