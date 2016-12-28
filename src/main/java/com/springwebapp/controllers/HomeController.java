@@ -19,7 +19,7 @@ public class HomeController {
 		
 		model.addAttribute("currentProject", project);
 		
-		return "welcome";
+		return "home";
 	}
 
 }

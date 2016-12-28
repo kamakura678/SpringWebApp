@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.springwebapp.models.Project;
 import com.springwebapp.services.ProjectService;
@@ -25,6 +26,11 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectService projectService;
+	
+	@RequestMapping("/find/{projectId}")
+	public @ResponseBody Project findProjectObject(Model model, @PathVariable("projectId") Long projectId) {
+		return this.projectService.find(projectId);
+	}
 	
 	@RequestMapping(value="/{projectId}")
 	public String findProject(Model model, @PathVariable("projectId") Long projectId) {
@@ -74,7 +80,7 @@ public class ProjectController {
 		this.projectService.addProject(project);
 		System.out.println(project);
 		model.addAttribute("projects", this.projectService.findAll());
-		return "projects";
+		return "redirect:/project/find";
 	}
 	
 	@InitBinder
